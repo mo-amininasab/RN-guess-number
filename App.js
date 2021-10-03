@@ -7,17 +7,26 @@ import Header from './components/Header';
 // screen
 import StartGameScreen from './screens/StartGameScreen';
 import GameScreen from './screens/GameScreen';
+import GameOverScreen from './screens/GameOverScreen';
 
 export default function App() {
   const [usrNumber, setUsrNumber] = useState();
+  const [guessRounds, setGuessRounds] = useState(0);
 
   const startGameHandler = (selectedNumber) => {
     setUsrNumber(selectedNumber);
+    setGuessRounds(0);
   };
 
+  const gameOverHandler = (numOfRound) => {
+    setGuessRounds(numOfRound);
+  }
+
   let content = <StartGameScreen onStartGame={startGameHandler} />;
-  if (usrNumber) {
-    content = <GameScreen userChoice={usrNumber} />;
+  if (usrNumber && guessRounds <= 0) {
+    content = <GameScreen userChoice={usrNumber} onGameOver={gameOverHandler} />;
+  } else if (guessRounds > 0) {
+    content = <GameOverScreen />
   }
 
   return (
