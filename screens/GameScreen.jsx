@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { StyleSheet, Text, View, Alert } from 'react-native';
+import { StyleSheet, Text, View, Alert, ScrollView } from 'react-native';
 
 // cmps
 import NumberContainer from '../components/NumberContainer';
@@ -9,6 +9,7 @@ import MainButton from '../components/MainButton';
 // style
 import DefaultStyles from '../constants/default-style';
 import { Ionicons } from '@expo/vector-icons';
+import BodyText from '../components/BodyText';
 
 const generateRandomBetween = (min, max, exclude) => {
   min = Math.ceil(min);
@@ -21,18 +22,27 @@ const generateRandomBetween = (min, max, exclude) => {
   return rndNum;
 };
 
-const GameScreen = ({ userChoice, onGameOver }) => {
-  const [currentGuess, setCurrentGuess] = useState(
-    generateRandomBetween(1, 100, userChoice)
+const renderListItem = (value, numOfRounds) => {
+  return (
+    <View key={value} style={styles.listItem}>
+      <BodyText>#{numOfRounds}</BodyText>
+      <BodyText>{value}</BodyText>
+    </View>
   );
-  const [rounds, setRounds] = useState(0);
+};
+
+const GameScreen = ({ userChoice, onGameOver }) => {
+  const initialGuess = generateRandomBetween(1, 100, userChoice);
+  const [currentGuess, setCurrentGuess] = useState(initialGuess);
+  const [pastGuesses, setPastGuesses] = useState([initialGuess]);
+  // const [rounds, setRounds] = useState(0);
 
   const currentLow = useRef(1);
   const currentHigh = useRef(100);
 
   useEffect(() => {
     if (currentGuess === userChoice) {
-      onGameOver(rounds);
+      onGameOver(pastGuesses.length);
     }
   }, [currentGuess, userChoice, onGameOver]);
 
@@ -59,7 +69,8 @@ const GameScreen = ({ userChoice, onGameOver }) => {
       currentGuess
     );
     setCurrentGuess(nextNumber);
-    setRounds((prevRounds) => prevRounds + 1);
+    // setRounds((prevRounds) => prevRounds + 1);
+    setPastGuesses((prevPastGuesses) => [nextNumber, ...prevPastGuesses]);
   };
 
   return (
@@ -74,6 +85,13 @@ const GameScreen = ({ userChoice, onGameOver }) => {
           <Ionicons name="caret-up" size={24} color="white" />
         </MainButton>
       </Card>
+      <View style={styles.listContainer}>
+        <ScrollView contentContainerStyle={styles.list}>
+          {pastGuesses.map((guess, index) =>
+            renderListItem(guess, pastGuesses.length - index)
+          )}
+        </ScrollView>
+      </View>
     </View>
   );
 };
@@ -92,5 +110,22 @@ const styles = StyleSheet.create({
     marginTop: 20,
     width: 340,
     maxWidth: '90%',
+  },
+  listContainer: {
+    flex: 1,
+    width: '80%',
+  },
+  list: {
+    alignItems: 'center'
+  },
+  listItem: {
+    borderColor: '#ccc',
+    borderWidth: 1,
+    padding: 15,
+    marginVertical: 10,
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '60%'
   },
 });
