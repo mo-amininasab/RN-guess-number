@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   StyleSheet,
-  Text,
   View,
   Button,
   TouchableWithoutFeedback,
@@ -9,6 +8,7 @@ import {
   Alert,
 } from 'react-native';
 import BodyText from '../components/BodyText';
+import MainButton from '../components/MainButton';
 
 // cmp
 import Card from '../components/Card';
@@ -60,10 +60,9 @@ const StartGameScreen = ({ onStartGame }) => {
       <Card style={styles.summaryContainer}>
         <BodyText>You Selected</BodyText>
         <NumberContainer>{selectedNumber}</NumberContainer>
-        <Button
-          title="START GAME"
-          onPress={() => onStartGame(selectedNumber)}
-        />
+        <MainButton onPress={() => onStartGame(selectedNumber)}>
+          START GAME
+        </MainButton>
       </Card>
     );
   }
@@ -143,6 +142,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    fontFamily: 'open-sans'
-  }
+    fontFamily: 'open-sans',
+  },
 });

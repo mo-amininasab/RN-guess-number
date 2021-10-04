@@ -62,15 +62,6 @@ export default function App() {
     );
   }
 
-  content = (
-    <GameOverScreen
-      roundsNumber={guessRounds}
-      userNumber={usrNumber}
-      onRestart={configureNewGameHandler}
-      />
-  );
-
-
   return (
     <View style={styles.screen}>
       <Header title="Guess a Number" />
