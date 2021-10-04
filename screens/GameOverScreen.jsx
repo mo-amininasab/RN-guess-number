@@ -1,23 +1,25 @@
 import React from 'react';
-import { StyleSheet, View, Button, Image } from 'react-native';
+import { StyleSheet, View, Button, Image, Text } from 'react-native';
 import BodyText from '../components/BodyText';
 import TitleText from '../components/TitleText';
+
+import { colors } from '../constants/colors';
 
 const GameOverScreen = ({ roundsNumber, userNumber, onRestart }) => {
   return (
     <View style={styles.screen}>
       <TitleText>The Game is Over!</TitleText>
       {/**Local Image */}
-      {/* <View style={styles.imageContainer}>
+      <View style={styles.imageContainer}>
         <Image
           source={require('../assets/success.png')}
           style={styles.image}
           resizeMode="cover"
         />
-      </View> */}
+      </View>
 
       {/* Web Image */}
-      <View style={styles.imageContainer}>
+      {/* <View style={styles.imageContainer}>
         <Image
           source={{
             uri: 'https://static.thenounproject.com/png/89205-200.png',
@@ -25,10 +27,15 @@ const GameOverScreen = ({ roundsNumber, userNumber, onRestart }) => {
           style={styles.image}
           resizeMode="cover"
         />
-      </View>
+      </View> */}
 
-      <BodyText>Number of rounds: {roundsNumber}</BodyText>
-      <BodyText>Number was: {userNumber}</BodyText>
+      <View style={styles.resultContainer}>
+        <BodyText style={styles.resultText}>
+          Your phone needed <Text style={styles.highlight}>{roundsNumber}</Text>{' '}
+          rounds to guess the number{' '}
+          <Text style={styles.highlight}>{userNumber}</Text>
+        </BodyText>
+      </View>
       <Button title="NEW GAME" onPress={onRestart} />
     </View>
   );
@@ -54,5 +61,17 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: '100%',
+  },
+  highlight: {
+    color: colors.primary,
+    fontFamily: 'open-sans-bold',
+  },
+  resultText: {
+    textAlign: 'center',
+    fontSize: 20,
+  },
+  resultContainer: {
+    marginHorizontal: 60,
+    marginVertical: 15,
   },
 });
