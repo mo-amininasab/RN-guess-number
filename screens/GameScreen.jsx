@@ -35,7 +35,6 @@ const GameScreen = ({ userChoice, onGameOver }) => {
   const initialGuess = generateRandomBetween(1, 100, userChoice);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
   const [pastGuesses, setPastGuesses] = useState([initialGuess]);
-  // const [rounds, setRounds] = useState(0);
 
   const currentLow = useRef(1);
   const currentHigh = useRef(100);
@@ -69,7 +68,6 @@ const GameScreen = ({ userChoice, onGameOver }) => {
       currentGuess
     );
     setCurrentGuess(nextNumber);
-    // setRounds((prevRounds) => prevRounds + 1);
     setPastGuesses((prevPastGuesses) => [nextNumber, ...prevPastGuesses]);
   };
 
@@ -116,7 +114,10 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   list: {
-    alignItems: 'center'
+    // flex: 1, // NOT WORK
+    flexGrow: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-end'
   },
   listItem: {
     borderColor: '#ccc',
