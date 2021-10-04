@@ -20,7 +20,7 @@ const GameOverScreen = ({ roundsNumber, userNumber, onRestart }) => {
       <View style={styles.imageContainer}>
         <Image
           source={{
-            uri: 'https://cdn.pixabay.com/photo/2019/01/22/18/30/summit-3948706_1280.jpg',
+            uri: 'https://static.thenounproject.com/png/89205-200.png',
           }}
           style={styles.image}
           resizeMode="cover"
